@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="src/style.css" />
+  </head>
+  <body>
+    <input type="file" multiple id="files" accept=".svg" />
+    <fieldset>
+    <legend>    result    </legend>
+    <textarea id="result">
+    </textarea>
+    </fieldset>
+    <script>
+      var o = {};
+      var elem = document.getElementById('files');
+          elem.addEventListener("change",async () => {
+          if (elem.files.length > 0) {
+            for (var i = 0 ; i < elem.files.length; i++)
+            {
+              var f = elem.files.item(i);
+              o[f.name.replace(/[\.\s]/g,'').trim()] = (await f.text());
+            }
+          }
+          document.getElementById('result').value = JSON.stringify(o);
+        });
+    </script>
+  </body>
+</html>
